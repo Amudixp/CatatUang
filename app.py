@@ -3,6 +3,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 import pandas as pd
+import os
 
 st.title("Keuangan Online Bang Purba")
 
@@ -11,8 +12,8 @@ creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
 client = gspread.authorize(creds)
 
 # spreadsheet
-SHEET_NAME = "Keuangan_Amudi" 
-sheet = client.open(SHEET_NAME).sheet1
+sheet_name = os.getenv("SHEET_NAME")
+sheet = client.open(sheet_name).sheet1
 
 with st.form("keuangan_form"):
     tipe = st.selectbox("Tipe", ["Pemasukan", "Pengeluaran"])
